@@ -9,10 +9,12 @@ const GameView = styled.div`
   display: flex;
   flex-direction: row;
   width: 90%;
-  margin: 10px;
+  max-width: 1400px;
+  margin: auto;
   padding: 2rem;
   justify-content: center;
   opacity: 1;
+  flex-wrap: wrap;
   @media (max-width: 800px) {
     flex-wrap: wrap;
   }

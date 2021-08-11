@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import cursor from '../assets/cursor.svg';
-import CharHead from '../components/CharactersHeads';
+import CharacterHead from '../components/CharacterHead';
 /* ---------------------------------- style --------------------------------- */
 const MainView = styled.div`
   display: flex;
@@ -48,12 +48,15 @@ const Timer = styled.div`
 const Chars = styled.div`
   text-align: center;
   margin: auto 20px;
+  & > img {
+    height: 45px;
+  }
 `;
 /* -------------------------------- component ------------------------------- */
 function Level() {
   const location = useLocation();
   const { level } = location.state;
-  const [characters, setCharachters] = useState([]);
+  const [characters, setCharacters] = useState([]);
   const [coords, setCoords] = useState([]);
   const [timer, setTimer] = useState(0);
   const increment = useRef(null);
@@ -91,7 +94,7 @@ function Level() {
     setCoords(selectedCoords);
     console.log(selectedCoords);
     console.log(timer);
-    isCorrect('wenda', selectedCoords);
+    isCorrect('waldo', selectedCoords);
   }
   useEffect(() => {
     const allowedChars = ['waldo', 'odlaw', 'wenda', 'wizard', 'woof'];
@@ -99,7 +102,7 @@ function Level() {
       Object.entries(level).filter(([key, val]) => allowedChars.includes(key)),
     );
     const chars = Object.keys(charsObj).map((key) => key);
-    setCharachters(chars);
+    setCharacters(chars);
     console.log(chars);
     // return () => {
     //   cleanup
@@ -119,7 +122,7 @@ function Level() {
     return `${getHours} : ${getMinutes} : ${getSeconds}`;
   };
   const charsHeads = characters.map((char) => (
-    <CharHead char={char} key={char} />
+    <CharacterHead char={char} key={char} />
   ));
   return (
     <MainView>
