@@ -2,12 +2,20 @@ import { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import cursor from '../assets/cursor.svg';
-import waldo from '../assets/waldo.png';
-import CharHead from '../components/CharHead';
-
+import CharHead from '../components/CharactersHeads';
+/* ---------------------------------- style --------------------------------- */
+const MainView = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 const LevelImg = styled.img`
   cursor: url(${cursor}) 25 25, pointer;
-  width: 100vw;
+  width: 95vw;
+  text-align: center;
+  margin: auto;
+  border: 1px solid gray;
+  border-radius: 8px;
 `;
 const GameInformationTab = styled.div`
   display: flex;
@@ -15,26 +23,33 @@ const GameInformationTab = styled.div`
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  margin: 10px auto;
+  margin: 0px auto 5px auto;
+  padding: 15px;
+  background-color: white;
+  width: fit-content;
+  border-radius: 6px;
 `;
 const Timer = styled.div`
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 20px;
   font-weight: 600;
-  color: purple;
+  color: white;
   padding: 10px 10px;
   width: 60px;
   margin: auto 20px;
-
   text-align: center;
-  background-color: yellow;
+  background-color: #4e81ee;
   border-radius: 8px;
+  :hover {
+    background-color: rgba(239, 68, 68);
+  }
 `;
 const Chars = styled.div`
   text-align: center;
   margin: auto 20px;
 `;
+/* -------------------------------- component ------------------------------- */
 function Level() {
   const location = useLocation();
   const { level } = location.state;
@@ -90,11 +105,11 @@ function Level() {
     //   cleanup
     // }
   }, []);
-  useEffect(() => {
-    increment.current = setInterval(() => {
-      setTimer((timer) => timer + 1);
-    }, 1000);
-  }, []);
+  // useEffect(() => {
+  //   increment.current = setInterval(() => {
+  //     setTimer((timer) => timer + 1);
+  //   }, 1000);
+  // }, []);
   const formatTime = () => {
     const getSeconds = `0${timer % 60}`.slice(-2);
     const minutes = `${Math.floor(timer / 60)}`;
@@ -107,13 +122,13 @@ function Level() {
     <CharHead char={char} key={char} />
   ));
   return (
-    <>
+    <MainView>
       <GameInformationTab>
         <Chars>{charsHeads}</Chars>
         <Timer>{timer}</Timer>
       </GameInformationTab>
       <LevelImg src={level.imgUrl} alt={level.id} onClick={handleClick} />
-    </>
+    </MainView>
   );
 }
 

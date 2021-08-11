@@ -3,31 +3,31 @@
 import styled from 'styled-components';
 // react-router
 
-import { Route, Switch, NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PageLogoTitle from './PageLogoTitle';
 
 /* ---------------------------------- style --------------------------------- */
 const MenuItem = styled.li`
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 13px;
   border-radius: 6px;
-  width: 90px;
-  height: 40px;
+  width: fit-content;
+  height: fit-content;
   text-align: center;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(239, 68, 68);
+  align-content: center;
+  align-self: center;
   background-color: rgba(239, 68, 68);
   margin: 0 5px 0 5px;
-  & > a {
-    font-size: 15px;
-    font-weight: 500;
-    list-style: none;
-    margin: 10px 0 0 0;
-    padding: 0.75rem 5px 0.75rem 5px;
-    text-decoration: none;
-    color: snow;
+  :hover {
+    background-color: #5a80e7;
   }
-  & :hover {
-    color: black;
+  & > a {
+    text-decoration: none;
+    color: white;
   }
 `;
 const NavMenu = styled.ul`

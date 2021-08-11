@@ -8,16 +8,24 @@ import Credits from './pages/Credits';
 import Leaderboard from './pages/Leaderboard';
 import Footer from './components/Footer';
 import NotFound from './pages/NotFound';
-
-const View = styled.div`
-  width: 100vw;
-  height: auto;
+/* ---------------------------------- style --------------------------------- */
+const APP = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 `;
-
+const View = styled.div`
+  flex-grow: 4;
+  width: 100vw;
+  padding-top: 10px;
+  padding-bottom: 100px;
+`;
+/* -------------------------------- component ------------------------------- */
 function App() {
   return (
     <BrowserRouter basename="/waldo">
-      <>
+      <APP>
         <Header />
         <View>
           <Switch>
@@ -39,7 +47,7 @@ function App() {
           </Switch>
         </View>
         <Footer />
-      </>
+      </APP>
     </BrowserRouter>
   );
 }
