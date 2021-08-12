@@ -1,10 +1,14 @@
+/* --------------------------------- imports -------------------------------- */
+// react
+import { useState } from 'react';
+// styled-component
 import styled from 'styled-components';
+// assets
 import waldo from '../assets/waldo.jpg';
 import wenda from '../assets/wenda.jpg';
 import odlaw from '../assets/odlaw.jpg';
 import wizard from '../assets/wizard.jpg';
-import { useState } from 'react';
-
+/* ---------------------------------- style --------------------------------- */
 const MenuCard = styled.div`
   width: 110px;
   /* height: 30px; */
@@ -12,7 +16,7 @@ const MenuCard = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  padding: 5px 30px;
+  padding: 5px 0px;
   justify-content: space-between;
   align-items: center;
   align-content: center;
@@ -30,21 +34,53 @@ const MenuCard = styled.div`
   }
   & > img {
     width: 30px;
-    padding-right: 15px;
-    margin-right: 15px;
   }
   & > p {
     font-size: 1em;
     text-align: left;
     font-weight: 400;
-    padding: 5px;
   }
 `;
-const HeadsMenu = ({ char, selectedCoords, clickedChar, setClickedChar }) => {
+/* -------------------------------- component ------------------------------- */
+const HeadsMenu = ({
+  char,
+  clickedCoords,
+  clickedChar,
+  setClickedChar,
+  level,
+  toggleMenu,
+}) => {
   const [heads, setHeads] = useState([]);
-  const [MenuPosition, setMenuPosition] = useState({});
   const updatedHeads = [];
-  console.log(char);
+  let selectedChars = [];
+
+  function isCorrect(character, selectedCoords) {
+    console.log(level[character][0]);
+    const range = 90;
+    function checkXCoord(xCoord) {
+      const upperXLimit = level[character][0] + range;
+      const lowerXLimit = level[character][0] - range;
+      return xCoord >= lowerXLimit && xCoord <= upperXLimit;
+    }
+    function checkYCoord(yCoord) {
+      const upperYLimit = level[character][1] + range;
+      const lowerYLimit = level[character][1] - range;
+      return yCoord >= lowerYLimit && yCoord <= upperYLimit;
+    }
+    console.log(
+      checkXCoord(selectedCoords[0]) && checkYCoord(selectedCoords[1]),
+    );
+    return checkXCoord(selectedCoords[0]) && checkYCoord(selectedCoords[1]);
+  }
+
+  function handleClick(character) {
+    toggleMenu(false);
+    // selectedChars = [...selectedChars, event.target.textContent];
+    // setClickedChar(selectedChars);
+    // console.log(character);
+    isCorrect(character, clickedCoords);
+  }
+
   let charImg = '';
   switch (char) {
     case 'waldo':
@@ -64,10 +100,11 @@ const HeadsMenu = ({ char, selectedCoords, clickedChar, setClickedChar }) => {
   }
   return (
     <MenuCard
-      style={{ left: selectedCoords[0] + 'px', top: selectedCoords[1] + 'px' }}
+      key={char}
+      // style={{ left: selectedCoords[0] + 'px', top: selectedCoords[1] + 'px' }}
+      onClick={() => handleClick(char)}
     >
       {charImg.length > 0 ? <img src={charImg} alt={charImg} /> : null}
-      {/* <div>{charImg}</div> */}
       <p>{char}</p>
     </MenuCard>
   );

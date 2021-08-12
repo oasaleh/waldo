@@ -11,7 +11,7 @@ const PageFooter = styled.footer`
 function Footer() {
   return (
     <PageFooter>
-      <a href="www.github.com">
+      <a href="https://github.com/oasaleh/waldo">
         <img
           style={{ width: '24px', paddingTop: '40px' }}
           src={github}

@@ -1,9 +1,15 @@
+/* --------------------------------- imports -------------------------------- */
+// react
 import { useEffect, useState, useRef } from 'react';
+// react-router
 import { useLocation } from 'react-router-dom';
+// styled-component
 import styled from 'styled-components';
-import cursor from '../assets/cursor.svg';
+// components
 import CharacterHead from '../components/CharacterHead';
 import HeadsMenu from '../components/HeadsMenu';
+// assets
+import cursor from '../assets/cursor.svg';
 /* ---------------------------------- style --------------------------------- */
 const MainView = styled.div`
   display: flex;
@@ -55,7 +61,6 @@ const Chars = styled.div`
     height: 45px;
   }
 `;
-
 const CharactersMenu = styled.menu`
   display: flex;
   flex-direction: column;
@@ -63,21 +68,13 @@ const CharactersMenu = styled.menu`
   align-items: center;
   background-color: #fefefe;
   overflow: auto;
-  /* width: 100px; */
-  /* height: 140px; */
   border-radius: 8px;
   padding: 8px 15px;
   z-index: 1;
   text-align: center;
-  /* opacity: 0.75; */
   position: absolute;
   display: block;
   visibility: visible;
-  /* visibility: hidden; */
-  :hover {
-    /* background-color: #c2c4c7; */
-    /* cursor: pointer; */
-  }
 `;
 /* -------------------------------- component ------------------------------- */
 function Level() {
@@ -90,24 +87,7 @@ function Level() {
   const [headsMenu, setHeadsMenu] = useState(false);
   const [mouseCoord, setMouseCoord] = useState([]);
   const [clickedChar, setClickedChar] = useState('');
-  function isCorrect(character, selectedCoords) {
-    const range = 90;
-    function checkXCoord(xCoord) {
-      const upperXLimit = level[character][0] + range;
-      const lowerXLimit = level[character][0] - range;
-      return xCoord >= lowerXLimit && xCoord <= upperXLimit;
-    }
-    function checkYCoord(yCoord) {
-      const upperYLimit = level[character][1] + range;
-      const lowerYLimit = level[character][1] - range;
-      return yCoord >= lowerYLimit && yCoord <= upperYLimit;
-    }
-    //3504, 1916
-    // console.log(
-    //   checkXCoord(selectedCoords[0]) && checkYCoord(selectedCoords[1]),
-    // );
-    return checkXCoord(selectedCoords[0]) && checkYCoord(selectedCoords[1]);
-  }
+
   function handleClick(event) {
     const bounds = event.target.getBoundingClientRect();
     const { left, top } = bounds;
@@ -122,15 +102,8 @@ function Level() {
     const selectedCoords = [px, py];
     setHeadsMenu(true);
     setCoords(selectedCoords);
-    console.log(x, y);
-    console.log(px, py);
-    console.log(event.screenX, event.screenY);
     setMouseCoord([x, y]);
-    // console.log(event);
-    // console.log(selectedCoords);
-    // console.log(timer);
-    console.log(clickedChar);
-    isCorrect('waldo', selectedCoords);
+    // isCorrect('waldo', selectedCoords);
   }
   useEffect(() => {
     const allowedChars = ['waldo', 'odlaw', 'wenda', 'wizard', 'woof'];
@@ -156,13 +129,13 @@ function Level() {
   const charsHeads = characters.map((char) => (
     <CharacterHead char={char} key={char} />
   ));
-  // console.log(charsHeads);
   const menuItems = characters.map((char) => (
     <HeadsMenu
       char={char}
-      selectedCoords={coords}
-      clickedChar={clickedChar}
-      setClickedChar={setClickedChar}
+      clickedCoords={coords}
+      level={level}
+      toggleMenu={setHeadsMenu}
+      key={char}
     />
   ));
   return (
@@ -172,20 +145,17 @@ function Level() {
           <Chars>{charsHeads}</Chars>
           <Timer>{timer}</Timer>
         </GameInformationTab>
-
-        {/* <div style={{ position: 'relative' }}> */}
         <LevelImg src={level.imgUrl} alt={level.id} onClick={handleClick} />
         <CharactersMenu
           style={{
             top: mouseCoord[1],
-            left: mouseCoord[0],
+            left: mouseCoord[0] + 50,
             display: 'block',
             visibility: 'visible',
           }}
         >
           {headsMenu ? menuItems : null}
         </CharactersMenu>
-        {/* </div> */}
       </MainView>
     </>
   );
