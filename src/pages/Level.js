@@ -3,11 +3,13 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import cursor from '../assets/cursor.svg';
 import CharacterHead from '../components/CharacterHead';
+import HeadsMenu from '../components/HeadsMenu';
 /* ---------------------------------- style --------------------------------- */
 const MainView = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
 `;
 const LevelImg = styled.img`
   cursor: url(${cursor}) 25 25, pointer;
@@ -16,6 +18,7 @@ const LevelImg = styled.img`
   margin: auto;
   border: 1px solid gray;
   border-radius: 8px;
+  /* position: relative; */
 `;
 const GameInformationTab = styled.div`
   display: flex;
@@ -52,6 +55,30 @@ const Chars = styled.div`
     height: 45px;
   }
 `;
+
+const CharactersMenu = styled.menu`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fefefe;
+  overflow: auto;
+  /* width: 100px; */
+  /* height: 140px; */
+  border-radius: 8px;
+  padding: 8px 15px;
+  z-index: 1;
+  text-align: center;
+  /* opacity: 0.75; */
+  position: absolute;
+  display: block;
+  visibility: visible;
+  /* visibility: hidden; */
+  :hover {
+    /* background-color: #c2c4c7; */
+    /* cursor: pointer; */
+  }
+`;
 /* -------------------------------- component ------------------------------- */
 function Level() {
   const location = useLocation();
@@ -60,7 +87,9 @@ function Level() {
   const [coords, setCoords] = useState([]);
   const [timer, setTimer] = useState(0);
   const increment = useRef(null);
-
+  const [headsMenu, setHeadsMenu] = useState(false);
+  const [mouseCoord, setMouseCoord] = useState([]);
+  const [clickedChar, setClickedChar] = useState('');
   function isCorrect(character, selectedCoords) {
     const range = 90;
     function checkXCoord(xCoord) {
@@ -74,9 +103,9 @@ function Level() {
       return yCoord >= lowerYLimit && yCoord <= upperYLimit;
     }
     //3504, 1916
-    console.log(
-      checkXCoord(selectedCoords[0]) && checkYCoord(selectedCoords[1]),
-    );
+    // console.log(
+    //   checkXCoord(selectedCoords[0]) && checkYCoord(selectedCoords[1]),
+    // );
     return checkXCoord(selectedCoords[0]) && checkYCoord(selectedCoords[1]);
   }
   function handleClick(event) {
@@ -91,9 +120,16 @@ function Level() {
     const px = (x / cw) * iw;
     const py = (y / ch) * ih;
     const selectedCoords = [px, py];
+    setHeadsMenu(true);
     setCoords(selectedCoords);
-    console.log(selectedCoords);
-    console.log(timer);
+    console.log(x, y);
+    console.log(px, py);
+    console.log(event.screenX, event.screenY);
+    setMouseCoord([x, y]);
+    // console.log(event);
+    // console.log(selectedCoords);
+    // console.log(timer);
+    console.log(clickedChar);
     isCorrect('waldo', selectedCoords);
   }
   useEffect(() => {
@@ -103,10 +139,6 @@ function Level() {
     );
     const chars = Object.keys(charsObj).map((key) => key);
     setCharacters(chars);
-    console.log(chars);
-    // return () => {
-    //   cleanup
-    // }
   }, []);
   // useEffect(() => {
   //   increment.current = setInterval(() => {
@@ -124,14 +156,38 @@ function Level() {
   const charsHeads = characters.map((char) => (
     <CharacterHead char={char} key={char} />
   ));
+  // console.log(charsHeads);
+  const menuItems = characters.map((char) => (
+    <HeadsMenu
+      char={char}
+      selectedCoords={coords}
+      clickedChar={clickedChar}
+      setClickedChar={setClickedChar}
+    />
+  ));
   return (
-    <MainView>
-      <GameInformationTab>
-        <Chars>{charsHeads}</Chars>
-        <Timer>{timer}</Timer>
-      </GameInformationTab>
-      <LevelImg src={level.imgUrl} alt={level.id} onClick={handleClick} />
-    </MainView>
+    <>
+      <MainView>
+        <GameInformationTab>
+          <Chars>{charsHeads}</Chars>
+          <Timer>{timer}</Timer>
+        </GameInformationTab>
+
+        {/* <div style={{ position: 'relative' }}> */}
+        <LevelImg src={level.imgUrl} alt={level.id} onClick={handleClick} />
+        <CharactersMenu
+          style={{
+            top: mouseCoord[1],
+            left: mouseCoord[0],
+            display: 'block',
+            visibility: 'visible',
+          }}
+        >
+          {headsMenu ? menuItems : null}
+        </CharactersMenu>
+        {/* </div> */}
+      </MainView>
+    </>
   );
 }
 

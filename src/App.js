@@ -26,7 +26,7 @@ function App() {
   return (
     <BrowserRouter basename="/waldo">
       <APP>
-        <Header />
+        <Header style={{ width: '100%' }} />
         <View>
           <Switch>
             <Route exact path="/levels">

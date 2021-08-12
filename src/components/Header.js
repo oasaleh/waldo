@@ -41,6 +41,7 @@ const NavMenu = styled.ul`
 const PageHeader = styled.header`
   display: grid;
   grid-template-columns: 1.8fr 1.5fr;
+  width: 100%;
   /* grid-template-rows: auto; */
   margin: 0px auto 0 auto;
   padding: 0;
