@@ -67,7 +67,7 @@ const CharactersMenu = styled.menu`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  border: 0.5px solid lightgray;
   overflow: auto;
   border-radius: 8px;
   padding: 8px 15px;
@@ -106,9 +106,9 @@ function Level() {
         target.every((v) => arr.includes(v))
       );
     }
-    // let gameWon = (arr, target) => target.every((v) => arr.includes(v));
-    // setWon(isWon(selectedChars, characters));
-    setWon(true);
+    let gameWon = (arr, target) => target.every((v) => arr.includes(v));
+    setWon(isWon(selectedChars, characters));
+    // setWon(true);
     console.log(isWon(selectedChars, characters), characters, selectedChars);
   }, [selectedChars]);
   function handleClick(event) {

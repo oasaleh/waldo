@@ -22,6 +22,9 @@ const MenuItem = styled.li`
   align-self: center;
   background-color: rgba(239, 68, 68);
   margin: 0 5px 0 5px;
+  text-decoration: none;
+  color: white;
+  list-style: none;
   :hover {
     background-color: #5a80e7;
   }
@@ -31,6 +34,7 @@ const MenuItem = styled.li`
   }
 `;
 const NavMenu = styled.ul`
+  text-decoration: none;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -67,15 +71,15 @@ function Header() {
     <PageHeader>
       <PageLogoTitle />
       <NavMenu>
-        <MenuItem>
-          <Link to="/levels">Levels</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="/credits">Credits</Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="/leaderboard">Leaderboard</Link>
-        </MenuItem>
+        <Link style={{ textDecoration: 'none' }} to="/levels">
+          <MenuItem>Levels</MenuItem>
+        </Link>
+        {/* <Link to="/credits">
+          <MenuItem>Credits</MenuItem>
+        </Link> */}
+        <Link style={{ textDecoration: 'none' }} to="/leaderboard">
+          <MenuItem>Leaderboard</MenuItem>
+        </Link>
       </NavMenu>
     </PageHeader>
   );
