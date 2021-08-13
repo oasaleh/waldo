@@ -64,7 +64,6 @@ const CancelButton = styled.button`
   cursor: pointer;
   border-radius: 8px;
   :hover {
-    background-color: #dd524c; /* Green */
   }
   :active {
     background-color: #85312e;
@@ -112,6 +111,7 @@ function SubmitScore({ time, setWon }) {
         .then(() => console.log('Success'))
         .catch((error) => console.log('Error', error));
     }
+    setWon(false);
     // location.href = 'www.yoursite.com';
   }
   return (
@@ -127,7 +127,7 @@ function SubmitScore({ time, setWon }) {
         <input
           style={{ marginTop: '9%' }}
           type="text"
-          placeholder="Name"
+          placeholder="ENTER YOUR NAME"
           value={inputValue}
           onChange={handleChange}
         />

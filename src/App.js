@@ -24,14 +24,11 @@ const View = styled.div`
 /* -------------------------------- component ------------------------------- */
 function App() {
   return (
-    <BrowserRouter basename="/waldo">
+    <BrowserRouter>
       <APP>
         <Header style={{ width: '100%' }} />
         <View>
           <Switch>
-            <Route exact path="/levels">
-              <Levels />
-            </Route>
             <Route exact path="/credits">
               <Credits />
             </Route>
@@ -40,6 +37,12 @@ function App() {
             </Route>
             <Route exact path="/level">
               <Level />
+            </Route>
+            <Route path="/levels">
+              <Levels />
+            </Route>
+            <Route path="/">
+              <Levels />
             </Route>
             <Route>
               <NotFound />

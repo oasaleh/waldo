@@ -101,12 +101,12 @@ function Level() {
   useEffect(() => {
     function isWon(arr, target) {
       return (
-        arr.length > 1 &&
-        target.length > 1 &&
+        arr.length !== 0 &&
+        target.length !== 0 &&
         target.every((v) => arr.includes(v))
       );
     }
-    let gameWon = (arr, target) => target.every((v) => arr.includes(v));
+    // let gameWon = (arr, target) => target.every((v) => arr.includes(v));
     setWon(isWon(selectedChars, characters));
     // setWon(true);
     console.log(isWon(selectedChars, characters), characters, selectedChars);
