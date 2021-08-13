@@ -23,20 +23,26 @@ const GameView = styled.div`
 function Levels() {
   const [loading, setLoading] = useState(true);
   const [levels, setLevels] = useState([]);
+  const updatedLevels = JSON.parse(localStorage.getItem('localLevels') || '[]');
 
   useEffect(() => {
-    if (levels.length === 0) {
-      const updatedLevels = [];
+    if (updatedLevels.length === 0) {
       db.collection('levels')
         .get()
         .then((levelsData) => {
           levelsData.forEach((levelData) => {
             updatedLevels.push(levelData.data());
+            // console.log(levelData.data());
           });
           setLevels(updatedLevels);
+          localStorage.setItem('localLevels', JSON.stringify(updatedLevels));
           setLoading(false);
-          // console.log(updatedLevels);
+          console.log(updatedLevels);
         });
+    } else {
+      console.log(updatedLevels, 'from localStorage');
+      setLevels(updatedLevels);
+      setLoading(false);
     }
   }, []);
 
