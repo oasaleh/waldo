@@ -45,17 +45,19 @@ const MenuCard = styled.div`
 const HeadsMenu = ({
   char,
   clickedCoords,
-  clickedChar,
-  setClickedChar,
+  selectedChars,
+  setSelectedChars,
+  characters,
+  gameWon,
   level,
   toggleMenu,
 }) => {
-  const [heads, setHeads] = useState([]);
-  const updatedHeads = [];
-  let selectedChars = [];
+  // const [heads, setHeads] = useState([]);
+  // const [pickedChars, setPickedChars] = useState([]);
+  // const updatedHeads = [];
+  let pickedChars = [];
 
   function isCorrect(character, selectedCoords) {
-    console.log(level[character][0]);
     const range = 90;
     function checkXCoord(xCoord) {
       const upperXLimit = level[character][0] + range;
@@ -67,18 +69,21 @@ const HeadsMenu = ({
       const lowerYLimit = level[character][1] - range;
       return yCoord >= lowerYLimit && yCoord <= upperYLimit;
     }
-    console.log(
-      checkXCoord(selectedCoords[0]) && checkYCoord(selectedCoords[1]),
-    );
+    // console.log(
+    //   checkXCoord(selectedCoords[0]) && checkYCoord(selectedCoords[1]),
+    // );
     return checkXCoord(selectedCoords[0]) && checkYCoord(selectedCoords[1]);
   }
 
   function handleClick(character) {
     toggleMenu(false);
-    // selectedChars = [...selectedChars, event.target.textContent];
-    // setClickedChar(selectedChars);
     // console.log(character);
-    isCorrect(character, clickedCoords);
+    if (isCorrect(character, clickedCoords)) {
+      // pickedChars = [...pickedChars, character];
+      setSelectedChars([...selectedChars, character]);
+
+      // gameWon(selectedChars, characters);
+    }
   }
 
   let charImg = '';
@@ -99,11 +104,7 @@ const HeadsMenu = ({
       return null;
   }
   return (
-    <MenuCard
-      key={char}
-      // style={{ left: selectedCoords[0] + 'px', top: selectedCoords[1] + 'px' }}
-      onClick={() => handleClick(char)}
-    >
+    <MenuCard onClick={() => handleClick(char)}>
       {charImg.length > 0 ? <img src={charImg} alt={charImg} /> : null}
       <p>{char}</p>
     </MenuCard>

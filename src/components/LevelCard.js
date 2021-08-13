@@ -58,7 +58,7 @@ function LevelCard({ levelData }) {
     );
     const chars = Object.keys(charsObj).map((key) => key);
     setCharacters(chars);
-    console.log(chars);
+    // console.log(chars);
     // return () => {
     //   cleanup
     // }

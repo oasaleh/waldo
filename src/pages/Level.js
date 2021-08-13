@@ -8,6 +8,7 @@ import styled from 'styled-components';
 // components
 import CharacterHead from '../components/CharacterHead';
 import HeadsMenu from '../components/HeadsMenu';
+import SubmitScore from '../components/SubmitScore';
 // assets
 import cursor from '../assets/cursor.svg';
 /* ---------------------------------- style --------------------------------- */
@@ -66,15 +67,15 @@ const CharactersMenu = styled.menu`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #fefefe;
+
   overflow: auto;
   border-radius: 8px;
   padding: 8px 15px;
   z-index: 1;
   text-align: center;
   position: absolute;
-  display: block;
-  visibility: visible;
+  /* display: block;
+  visibility: visible; */
 `;
 /* -------------------------------- component ------------------------------- */
 function Level() {
@@ -87,7 +88,29 @@ function Level() {
   const [headsMenu, setHeadsMenu] = useState(false);
   const [mouseCoord, setMouseCoord] = useState([]);
   const [clickedChar, setClickedChar] = useState('');
-
+  const [selectedChars, setSelectedChars] = useState([]);
+  const [won, setWon] = useState(false);
+  useEffect(() => {
+    const allowedChars = ['waldo', 'odlaw', 'wenda', 'wizard', 'woof'];
+    const charsObj = Object.fromEntries(
+      Object.entries(level).filter(([key, val]) => allowedChars.includes(key)),
+    );
+    const chars = Object.keys(charsObj).map((key) => key);
+    setCharacters(chars);
+  }, []);
+  useEffect(() => {
+    function isWon(arr, target) {
+      return (
+        arr.length > 1 &&
+        target.length > 1 &&
+        target.every((v) => arr.includes(v))
+      );
+    }
+    // let gameWon = (arr, target) => target.every((v) => arr.includes(v));
+    // setWon(isWon(selectedChars, characters));
+    setWon(true);
+    console.log(isWon(selectedChars, characters), characters, selectedChars);
+  }, [selectedChars]);
   function handleClick(event) {
     const bounds = event.target.getBoundingClientRect();
     const { left, top } = bounds;
@@ -105,14 +128,7 @@ function Level() {
     setMouseCoord([x, y]);
     // isCorrect('waldo', selectedCoords);
   }
-  useEffect(() => {
-    const allowedChars = ['waldo', 'odlaw', 'wenda', 'wizard', 'woof'];
-    const charsObj = Object.fromEntries(
-      Object.entries(level).filter(([key, val]) => allowedChars.includes(key)),
-    );
-    const chars = Object.keys(charsObj).map((key) => key);
-    setCharacters(chars);
-  }, []);
+
   // useEffect(() => {
   //   increment.current = setInterval(() => {
   //     setTimer((timer) => timer + 1);
@@ -132,6 +148,10 @@ function Level() {
   const menuItems = characters.map((char) => (
     <HeadsMenu
       char={char}
+      selectedChars={selectedChars}
+      setSelectedChars={setSelectedChars}
+      characters={characters}
+      // gameWon={gameWon}
       clickedCoords={coords}
       level={level}
       toggleMenu={setHeadsMenu}
@@ -146,16 +166,22 @@ function Level() {
           <Timer>{timer}</Timer>
         </GameInformationTab>
         <LevelImg src={level.imgUrl} alt={level.id} onClick={handleClick} />
-        <CharactersMenu
-          style={{
-            top: mouseCoord[1],
-            left: mouseCoord[0] + 50,
-            display: 'block',
-            visibility: 'visible',
-          }}
-        >
-          {headsMenu ? menuItems : null}
-        </CharactersMenu>
+
+        {headsMenu ? (
+          <CharactersMenu
+            style={{
+              top: mouseCoord[1],
+              left: mouseCoord[0] + 50,
+              display: 'block',
+              visibility: 'visible',
+              backgroundColor: '#fefefe',
+            }}
+          >
+            {menuItems}{' '}
+          </CharactersMenu>
+        ) : null}
+
+        {won ? <SubmitScore setWon={setWon} time={timer} /> : null}
       </MainView>
     </>
   );
