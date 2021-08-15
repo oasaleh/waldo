@@ -40,7 +40,7 @@ function Leaderboard() {
   let currentPlayers = [];
   useEffect(() => {
     db.collection('leaderboard')
-      .where('time', '<', 20)
+      // .where('time', '<', 20)
       .where('time', '>', 0)
       .orderBy('time', 'asc')
       .get()

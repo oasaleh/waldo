@@ -1,9 +1,8 @@
 /* --------------------------------- imports -------------------------------- */
 import { useState, useEffect } from 'react';
-import { useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 import LevelCard from '../components/LevelCard';
-import { db, storage } from '../firebase/config';
+import { db } from '../firebase/config';
 /* ---------------------------------- style --------------------------------- */
 const GameView = styled.div`
   display: flex;
@@ -37,10 +36,10 @@ function Levels() {
           setLevels(updatedLevels);
           localStorage.setItem('localLevels', JSON.stringify(updatedLevels));
           setLoading(false);
-          console.log(updatedLevels);
+          // console.log(updatedLevels);
         });
     } else {
-      console.log(updatedLevels, 'from localStorage');
+      // console.log(updatedLevels, 'from localStorage');
       setLevels(updatedLevels);
       setLoading(false);
     }
