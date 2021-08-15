@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { db } from '../firebase/config';
 import styled from 'styled-components';
+import { db } from '../firebase/config';
 import PlayerScoreCard from '../components/PlayerScoreCard';
 
 const LeaderboardTable = styled.div`
@@ -22,7 +22,6 @@ const TableHead = styled.div`
   border-radius: 8px;
   height: 40px;
 `;
-const TableRow = styled.div``;
 const TableHeading = styled.div``;
 const TableBody = styled.div`
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
@@ -41,6 +40,9 @@ function Leaderboard() {
   let currentPlayers = [];
   useEffect(() => {
     db.collection('leaderboard')
+      .where('time', '<', 20)
+      .where('time', '>', 0)
+      .orderBy('time', 'asc')
       .get()
       .then((player) => {
         player.forEach((doc) => {
@@ -64,7 +66,15 @@ function Leaderboard() {
         <TableHeading>Name</TableHeading>
         <TableHeading>Time (seconds)</TableHeading>
       </TableHead>
-      <TableBody>{players.length > 0 ? playerScore : null}</TableBody>
+      <TableBody>
+        {players.length > 0 ? (
+          playerScore
+        ) : (
+          <h1 style={{ marginTop: '14%', fontWeight: '800', fontSize: '2em' }}>
+            Be the first on the leaderboard!
+          </h1>
+        )}
+      </TableBody>
     </LeaderboardTable>
   );
 }
