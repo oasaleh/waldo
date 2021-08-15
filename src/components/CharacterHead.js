@@ -4,16 +4,29 @@ import odlaw from '../assets/odlaw.jpg';
 import wizard from '../assets/wizard.jpg';
 import woof from '../assets/woof.png';
 
-const CharacterHead = ({ char }) => {
+const CharacterHead = ({ char, found }) => {
+  // console.log(found);
   switch (char) {
     case 'waldo':
-      return <img src={waldo} alt={char} />;
+      return (
+        <img style={found ? { opacity: '0.2' } : null} src={waldo} alt={char} />
+      );
     case 'wenda':
-      return <img src={wenda} alt={char} />;
+      return (
+        <img style={found ? { opacity: '0.2' } : null} src={wenda} alt={char} />
+      );
     case 'odlaw':
-      return <img src={odlaw} alt={char} />;
+      return (
+        <img style={found ? { opacity: '0.2' } : null} src={odlaw} alt={char} />
+      );
     case 'wizard':
-      return <img src={wizard} alt={char} />;
+      return (
+        <img
+          style={found ? { opacity: '0.2' } : null}
+          src={wizard}
+          alt={char}
+        />
+      );
     default:
       return null;
   }

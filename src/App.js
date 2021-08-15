@@ -19,7 +19,7 @@ const View = styled.div`
   flex-grow: 4;
   width: 100vw;
   padding-top: 10px;
-  padding-bottom: 100px;
+  /* padding-bottom: 100px; */
 `;
 /* -------------------------------- component ------------------------------- */
 function App() {

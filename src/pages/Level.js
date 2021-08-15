@@ -87,13 +87,16 @@ function Level() {
   const increment = useRef(null);
   const [headsMenu, setHeadsMenu] = useState(false);
   const [mouseCoord, setMouseCoord] = useState([]);
-  const [clickedChar, setClickedChar] = useState('');
   const [selectedChars, setSelectedChars] = useState([]);
   const [won, setWon] = useState(false);
+
+  const stopTimer = () => {
+    clearInterval(increment.current);
+  };
   useEffect(() => {
     const allowedChars = ['waldo', 'odlaw', 'wenda', 'wizard', 'woof'];
     const charsObj = Object.fromEntries(
-      Object.entries(level).filter(([key, val]) => allowedChars.includes(key)),
+      Object.entries(level).filter(([key]) => allowedChars.includes(key)),
     );
     const chars = Object.keys(charsObj).map((key) => key);
     setCharacters(chars);
@@ -106,11 +109,23 @@ function Level() {
         target.every((v) => arr.includes(v))
       );
     }
-    // let gameWon = (arr, target) => target.every((v) => arr.includes(v));
     setWon(isWon(selectedChars, characters));
+
     // setWon(true);
-    console.log(isWon(selectedChars, characters), characters, selectedChars);
   }, [selectedChars]);
+  // useEffect(() => {
+  //   console.log(characters);
+  //   charsHeads = characters.map((char) => {
+  //     if (selectedChars.includes(char)) {
+  //       console.log(char);
+  //       return <CharacterHead char={char} found key={char} />;
+  //     }
+  //     return <CharacterHead char={char} found={false} key={char} />;
+  //   });
+  // }, [characters]);
+  useEffect(() => {
+    won ? stopTimer() : null;
+  }, [won]);
   function handleClick(event) {
     const bounds = event.target.getBoundingClientRect();
     const { left, top } = bounds;
@@ -128,22 +143,30 @@ function Level() {
     setMouseCoord([x, y]);
     // isCorrect('waldo', selectedCoords);
   }
+  useEffect(() => {
+    console.log(timer);
+    increment.current = setInterval(() => {
+      setTimer((timer) => timer + 1);
+    }, 1000);
+    return () => {
+      clearInterval(increment.current);
+    };
+  }, []);
 
-  // useEffect(() => {
-  //   increment.current = setInterval(() => {
-  //     setTimer((timer) => timer + 1);
-  //   }, 1000);
-  // }, []);
-  const formatTime = () => {
-    const getSeconds = `0${timer % 60}`.slice(-2);
-    const minutes = `${Math.floor(timer / 60)}`;
-    const getMinutes = `0${minutes % 60}`.slice(-2);
-    const getHours = `0${Math.floor(timer / 3600)}`.slice(-2);
+  // const formatTime = () => {
+  //   const getSeconds = `0${timer % 60}`.slice(-2);
+  //   const minutes = `${Math.floor(timer / 60)}`;
+  //   const getMinutes = `0${minutes % 60}`.slice(-2);
+  //   const getHours = `0${Math.floor(timer / 3600)}`.slice(-2);
 
-    return `${getHours} : ${getMinutes} : ${getSeconds}`;
-  };
+  //   return `${getHours} : ${getMinutes} : ${getSeconds}`;
+  // };
   const charsHeads = characters.map((char) => (
-    <CharacterHead char={char} key={char} />
+    <CharacterHead
+      found={selectedChars.includes(char)}
+      char={char}
+      key={char}
+    />
   ));
   const menuItems = characters.map((char) => (
     <HeadsMenu

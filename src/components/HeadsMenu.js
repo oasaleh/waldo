@@ -56,7 +56,7 @@ const HeadsMenu = ({
   // const [pickedChars, setPickedChars] = useState([]);
   // const updatedHeads = [];
   let pickedChars = [];
-
+  const [found, setFound] = useState(false);
   function isCorrect(character, selectedCoords) {
     const range = 90;
     function checkXCoord(xCoord) {

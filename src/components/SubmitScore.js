@@ -48,13 +48,15 @@ const ButtonsRow = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding: 15% 5px 5px 5px;
 `;
 const CancelButton = styled.button`
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+  /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-  border: 1px solid gray;
+  border: 1px solid gray; */
   border: none;
-  color: white;
+  color: #cd5b52;
+  font-weight: 800;
   padding: 15px;
   text-align: center;
   text-decoration: none;
@@ -63,19 +65,20 @@ const CancelButton = styled.button`
   margin: 40px 2px;
   cursor: pointer;
   border-radius: 8px;
+  background: snow;
   :hover {
   }
   :active {
-    background-color: #85312e;
+    /* background-color: #85312e; */
   }
 `;
 
 const SubmitButton = styled.input`
-  background-color: #dd524c; /* Green */
+  background-color: #db8b84;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   border: none;
-  color: white;
+  color: snow;
   padding: 15px;
   text-align: center;
   text-decoration: none;
@@ -85,11 +88,14 @@ const SubmitButton = styled.input`
   cursor: pointer;
   border-radius: 8px;
   :hover {
-    background-color: #85312e;
+    background-color: #dd524c;
+    color: snow;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   }
-  :active {
+  /* :active {
     background-color: #85312e;
-  }
+  } */
 `;
 /* -------------------------------- component ------------------------------- */
 function SubmitScore({ time, setWon }) {
@@ -118,21 +124,37 @@ function SubmitScore({ time, setWon }) {
     <FormBox>
       <SubmissionForm>
         <h3
-          style={{ paddingBottom: '8%', fontWeight: '800', fontSize: '2em' }}
+          style={{
+            paddingBottom: '3%',
+            paddingTop: '0',
+            fontWeight: '800',
+            fontSize: '2em',
+          }}
           id="title"
         >
-          You found them all!
+          GREAT JOB!
         </h3>
-        <p id="text">in {time} seconds!</p>
+        <p id="text">Your time is {time} seconds</p>
         <input
-          style={{ marginTop: '9%' }}
+          style={{
+            width: '80%',
+            padding: '15px 22px',
+            margin: '25% 5px 5% 5px',
+            boxSizing: 'border-box',
+            borderRadius: '8px',
+            border: '0.5px solid #db8b84',
+            textAlign: 'center',
+            outline: 'none',
+          }}
           type="text"
-          placeholder="ENTER YOUR NAME"
+          placeholder="YOUR NAME"
           value={inputValue}
           onChange={handleChange}
         />
         <ButtonsRow>
-          <CancelButton onClick={handleCancel}>Cancel</CancelButton>
+          <CancelButton onClick={handleCancel}>
+            <span>Cancel</span>
+          </CancelButton>
           <Link to="/levels">
             <SubmitButton type="submit" value="Submit" onClick={handleClick} />
           </Link>

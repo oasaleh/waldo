@@ -5,7 +5,7 @@ import PlayerScoreCard from '../components/PlayerScoreCard';
 
 const LeaderboardTable = styled.div`
   text-align: center;
-  width: 90%;
+  width: 70%;
   margin: 30px auto;
 `;
 const TableHead = styled.div`
