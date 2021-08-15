@@ -11,10 +11,11 @@ Hurry up, the clock is ticking!
 After finding all characters, you will be prompted to enter your name to be included in the leaderboard. You can decline however your score will be lost.
 
 ## Demo
-Play the game [here]().
+Coming soon!
+<!-- Play the game [here](). -->
 
 ## Tech Stack
 - React
 - React-Router
-- Firebase (Firestore)
+- Firebase (Firestore, Storage)
 - Styled-Components

@@ -1,6 +1,6 @@
 /* --------------------------------- imports -------------------------------- */
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import styled from 'styled-components';
 import { db, storage } from '../firebase/config';
@@ -100,24 +100,27 @@ const SubmitButton = styled.input`
 /* -------------------------------- component ------------------------------- */
 function SubmitScore({ time, setWon }) {
   const [inputValue, setInputValue] = useState('');
+  const history = useHistory();
   function handleChange(event) {
     setInputValue(event.target.value);
   }
   function handleCancel(event) {
     event.preventDefault();
+    history.push('/levels');
     setWon(false);
   }
   function handleClick(event) {
-    alert('A name was submitted: ' + inputValue);
+    // alert('A name was submitted: ' + inputValue);
     event.preventDefault();
     if (inputValue !== '') {
       db.collection('leaderboard')
         .doc(inputValue)
         .set({ name: inputValue, time })
-        .then(() => console.log('Success'))
+        // .then(() => console.log('Success'))
         .catch((error) => console.log('Error', error));
     }
     setWon(false);
+    history.push('/leaderboard');
     // location.href = 'www.yoursite.com';
   }
   return (
@@ -155,9 +158,7 @@ function SubmitScore({ time, setWon }) {
           <CancelButton onClick={handleCancel}>
             <span>Cancel</span>
           </CancelButton>
-          <Link to="/levels">
-            <SubmitButton type="submit" value="Submit" onClick={handleClick} />
-          </Link>
+          <SubmitButton type="submit" value="Submit" onClick={handleClick} />
         </ButtonsRow>
       </SubmissionForm>
     </FormBox>
